@@ -6,17 +6,20 @@
     <form class="user" action="{{ route('receipts.store') }}" method="POST" id="receiptStore">
         @csrf
 
-
         <div class="form-group row">
             <div class="col-sm-6 mb-3 mb-sm-4">
                 <label for="name">Nome</label>
                 <input type="text" class="form-control form-control-user" id="name" name="name" aria-describedby="name" placeholder="Insira o nome" @if($receiptSession["name"] !='null' ) value={{$receiptSession["name"]}} @endif>
             </div>
-            <div class="col-sm-6 mb-3 mb-sm-4">
+            <div class="col-sm-4 mb-3 mb-sm-4">
                 <label for="phone">Telefone</label>
                 <input type="number" class="form-control form-control-user" id="phone" name="phone" aria-describedby="phone" placeholder="Insira o telefone" @if($receiptSession["phone"] !='null' ) value={{$receiptSession["phone"]}} @endif>
             </div>
-
+            <div class="col-sm-2 mt-4 mb-sm-4">
+                <div class="d-sm-flex align-items-center justify-content-start ">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCliente" data-whatever="@mdo">Add. Cliente</button>
+                </div>
+            </div>
             <div class="col-sm-10 mb-3 mb-sm-4">
                 <label for="item">Items</label>
                 <select name="item" class="custom-select form-create @if($errors->has('item')) is-invalid @endif">
@@ -44,24 +47,31 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Serial Number</th>
-                                <th>Price</th>
-                                <th>Type</th>
+                                <th class="col-2">Name</th>
+                                <th class="col-2">Serial Number</th>
+                                <th class="col-2">Price</th>
+                                <th class="col-2">Type</th>
+                                <th class="col-2">Quantidade</th>
                                 <th>Ações</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($items_session as $item)
+                            @php $index=0; @endphp
 
+                            @foreach ($items_session as $item)
                             <tr>
                                 <input type="hidden" name="SELECTED_ITEMS[]" value="{{ $item->id }}">
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->price}}</td>
                                 <td>{{ $item->serial_number}}</td>
+                                <td>{{ $item->price}}</td>
                                 <td>{{ $item->itemType->name}}</td>
-                                <td>{{ $item->itemType->name}}</td>
+                                <td>
+                                    <input type="number" class="form-control col-8" id="AMOUNT_ITEM" name="AMOUNT_ITEM[]" aria-describedby="AMOUNT_ITEM" @if($receiptSession["amount_item"] !='null' ) value={{$receiptSession["amount_item"][$index]}} @endif>
+                                </td>
                             </tr>
+                            @php $index++; @endphp
+
                             @endforeach
                         </tbody>
                         <tfoot>
@@ -70,7 +80,9 @@
                                 <th>Serial Number</th>
                                 <th>Price</th>
                                 <th>Type</th>
+                                <th class="col-2">Quantidade</th>
                                 <th>Ações</th>
+
                             </tr>
                         </tfoot>
                     </table>

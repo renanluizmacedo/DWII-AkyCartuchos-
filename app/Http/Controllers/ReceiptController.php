@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreReceiptRequest;
 use App\Http\Requests\UpdateReceiptRequest;
 use App\Models\Receipt;
-use App\Models\Item;
+use App\Models\item;
+use Illuminate\Http\Request;
 
-use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
 class ReceiptController extends Controller
@@ -24,12 +23,12 @@ class ReceiptController extends Controller
         $sess['name'] = '';
         $sess['phone'] = '';
         $sess['note'] = '';
+        $sess['amount_item'] = array();
         $sess['item'] = array();
         $sess['route_action'] = Route::currentRouteName();
 
-
         session(['receipt' => $sess]);
-        
+
         return view('receipts.index');
     }
 
@@ -40,6 +39,7 @@ class ReceiptController extends Controller
      */
     public function create()
     {
+
         $receiptSession = session('receipt');
 
         $items_session = [];
@@ -49,7 +49,7 @@ class ReceiptController extends Controller
                 $i = 0;
 
                 foreach ($receiptSession['item'] as $it) {
-                    if (Item::find($it) != null) {
+                    if (item::find($it) != null) {
                         $items_session[$i] = Item::find($it);
                     }
                     $i++;
@@ -68,9 +68,17 @@ class ReceiptController extends Controller
      * @param  \App\Http\Requests\StoreReceiptRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreReceiptRequest $request)
+    public function store(Request $request)
     {
-        //
+        if ($request->botaoSession != null) {
+            $this->sessionReceipt($request);
+            return redirect()->route('receipts.create');
+        }
+
+
+
+
+        return redirect()->route('receipts.index');
     }
 
     /**
@@ -117,18 +125,22 @@ class ReceiptController extends Controller
     {
         //
     }
+
     public function sessionReceipt(Request $request)
     {
 
+        dd($request);
+
         $sess = session('receipt');
 
-        $sess['name'] = $request->name;
+        $sess['name'] = mb_strtoupper($request->name, 'UTF-8');
         $sess['phone'] = $request->phone;
-        $sess['note'] = $request->note;
+        $sess['note'] = mb_strtoupper($request->note, 'UTF-8');
+
+        array_push($sess['item'], $request->item);
+        array_push($sess['amount_item'], 1);
 
         $sess['route_action'] = Route::currentRouteName();
-        array_push($sess['item'], $request->item);
-
         session(['receipt' => $sess]);
     }
 }

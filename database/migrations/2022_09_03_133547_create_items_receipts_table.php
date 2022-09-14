@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemsServiceOrdersTable extends Migration
+class CreateItemsReceiptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateItemsServiceOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('items_service_orders', function (Blueprint $table) {
+        Schema::create('items_receipts', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items');
+            
+            $table->unsignedBigInteger('receipt_id');
+            $table->foreign('receipt_id')->references('id')->on('receipts');
 
+            $table->unsignedBigInteger('amount');
 
-            $table->unsignedBigInteger('serviceOrder_id');
-            $table->foreign('serviceOrder_id')->references('id')->on('service_orders');
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ class CreateItemsServiceOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items_service_orders');
+        Schema::dropIfExists('items_receipts');
     }
 }

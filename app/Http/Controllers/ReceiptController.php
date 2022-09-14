@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateserviceOrderRequest;
-use App\Models\serviceOrder;
-use App\Models\item;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreReceiptRequest;
+use App\Http\Requests\UpdateReceiptRequest;
+use App\Models\Receipt;
+use App\Models\Item;
+
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
-class ServiceOrderController extends Controller
+class ReceiptController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +19,7 @@ class ServiceOrderController extends Controller
      */
     public function index()
     {
-        $sess = session('serviceOrder');
+        $sess = session('receipt');
 
         $sess['name'] = '';
         $sess['phone'] = '';
@@ -26,9 +28,9 @@ class ServiceOrderController extends Controller
         $sess['route_action'] = Route::currentRouteName();
 
 
-        session(['serviceOrder' => $sess]);
-
-        return view('serviceOrder.index');
+        session(['receipt' => $sess]);
+        
+        return view('receipts.index');
     }
 
     /**
@@ -38,15 +40,15 @@ class ServiceOrderController extends Controller
      */
     public function create()
     {
-        $serviceOrdemSession = session('serviceOrder');
+        $receiptSession = session('receipt');
 
         $items_session = [];
 
-        if ($serviceOrdemSession != null) {
-            if (array_key_exists('item', $serviceOrdemSession)) {
+        if ($receiptSession != null) {
+            if (array_key_exists('item', $receiptSession)) {
                 $i = 0;
 
-                foreach ($serviceOrdemSession['item'] as $it) {
+                foreach ($receiptSession['item'] as $it) {
                     if (Item::find($it) != null) {
                         $items_session[$i] = Item::find($it);
                     }
@@ -57,30 +59,27 @@ class ServiceOrderController extends Controller
 
         $items =  item::all();
 
-        return view('serviceOrder.create', compact(['items', 'items_session', 'serviceOrdemSession']));
+        return view('receipts.create', compact(['items', 'items_session', 'receiptSession']));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreserviceOrderRequest  $request
+     * @param  \App\Http\Requests\StoreReceiptRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreReceiptRequest $request)
     {
-        if ($request->botaoSession != null) {
-            $this->sessionServiceOrder($request);
-            return redirect()->route('serviceOrder.create');
-        }
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Receipt  $receipt
      * @return \Illuminate\Http\Response
      */
-    public function show(serviceOrder $serviceOrder)
+    public function show(Receipt $receipt)
     {
         //
     }
@@ -88,10 +87,10 @@ class ServiceOrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Receipt  $receipt
      * @return \Illuminate\Http\Response
      */
-    public function edit(serviceOrder $serviceOrder)
+    public function edit(Receipt $receipt)
     {
         //
     }
@@ -99,11 +98,11 @@ class ServiceOrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateserviceOrderRequest  $request
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Http\Requests\UpdateReceiptRequest  $request
+     * @param  \App\Models\Receipt  $receipt
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateserviceOrderRequest $request, serviceOrder $serviceOrder)
+    public function update(UpdateReceiptRequest $request, Receipt $receipt)
     {
         //
     }
@@ -111,17 +110,17 @@ class ServiceOrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Receipt  $receipt
      * @return \Illuminate\Http\Response
      */
-    public function destroy(serviceOrder $serviceOrder)
+    public function destroy(Receipt $receipt)
     {
         //
     }
-    public function sessionServiceOrder(Request $request)
+    public function sessionReceipt(Request $request)
     {
 
-        $sess = session('serviceOrder');
+        $sess = session('receipt');
 
         $sess['name'] = $request->name;
         $sess['phone'] = $request->phone;
@@ -130,6 +129,6 @@ class ServiceOrderController extends Controller
         $sess['route_action'] = Route::currentRouteName();
         array_push($sess['item'], $request->item);
 
-        session(['serviceOrder' => $sess]);
+        session(['receipt' => $sess]);
     }
 }

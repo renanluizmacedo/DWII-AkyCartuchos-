@@ -26,5 +26,6 @@ Route::resource('/addresses', '\App\Http\Controllers\AddressController')->middle
 Route::resource('/serviceOrder', '\App\Http\Controllers\ServiceOrderController')->middleware(['auth']);
 Route::resource('/items', '\App\Http\Controllers\ItemController')->middleware(['auth']);
 Route::resource('/itemsType', '\App\Http\Controllers\ItemTypeController')->middleware(['auth']);
+Route::resource('/receipts', '\App\Http\Controllers\ReceiptController')->middleware(['auth']);
 
 require __DIR__ . '/auth.php';

@@ -69,7 +69,7 @@
                                 <td>{{ $item->price}}</td>
                                 <td>{{ $item->itemType->name}}</td>
                                 <td>
-                                    <input type="number" class="form-control col-8" id="AMOUNT_ITEM" name="AMOUNT_ITEM[]" aria-describedby="AMOUNT_ITEM" @if($receiptSession["amount_item"] !='null' ) value={{$receiptSession["amount_item"][$index]}} @endif>
+                                    <input type="number" min="1" class="form-control col-8" id="AMOUNT_ITEM" name="AMOUNT_ITEM[]" aria-describedby="AMOUNT_ITEM" value="1">
                                 </td>
                             </tr>
                             @php $index++; @endphp

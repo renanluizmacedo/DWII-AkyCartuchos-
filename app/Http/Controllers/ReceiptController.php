@@ -27,7 +27,6 @@ class ReceiptController extends Controller
         $sess['name'] = '';
         $sess['phone'] = '';
         $sess['note'] = '';
-        $sess['amount_item'] = array();
         $sess['item'] = array();
         $sess['route_action'] = Route::currentRouteName();
 
@@ -48,6 +47,7 @@ class ReceiptController extends Controller
         $receiptSession = session('receipt');
 
         $items_session = [];
+
 
         if ($receiptSession != null) {
             if (array_key_exists('item', $receiptSession)) {
@@ -84,14 +84,16 @@ class ReceiptController extends Controller
         $receipt = $this->storeReceipt($request);
         $items = $this->selectedItems($request->SELECTED_ITEMS);
 
+        $index = 0;
         foreach ($items as $item) {
 
             $receiptItem = new ReceiptItem();
             $receiptItem->receipt()->associate($receipt);
             $receiptItem->item()->associate($item);
-            $receiptItem->amount = 1;
+            $receiptItem->amount = $request->AMOUNT_ITEM[$index];
 
             $receiptItem->save();
+            $index++;
         }
 
         return redirect()->route('receipts.index');
@@ -203,8 +205,9 @@ class ReceiptController extends Controller
 
         $sess['note'] = mb_strtoupper($request->note, 'UTF-8');
 
-        array_push($sess['item'], $request->item);
-        array_push($sess['amount_item'], 1);
+        if (!in_array($request->item, $sess['item'])) {
+            array_push($sess['item'], $request->item);
+        }
 
         $sess['route_action'] = Route::currentRouteName();
         session(['receipt' => $sess]);

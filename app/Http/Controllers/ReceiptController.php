@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateReceiptRequest;
 use App\Models\Receipt;
+use App\Models\ReceiptItem;
 use App\Models\item;
+use App\Models\Customer;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
@@ -20,6 +23,7 @@ class ReceiptController extends Controller
     {
         $sess = session('receipt');
 
+        $sess['customer_id'] = '';
         $sess['name'] = '';
         $sess['phone'] = '';
         $sess['note'] = '';
@@ -28,8 +32,9 @@ class ReceiptController extends Controller
         $sess['route_action'] = Route::currentRouteName();
 
         session(['receipt' => $sess]);
+        $receipts = Receipt::with(['customer'])->get();
 
-        return view('receipts.index');
+        return view('receipts.index', compact('receipts'));
     }
 
     /**
@@ -58,8 +63,9 @@ class ReceiptController extends Controller
         }
 
         $items =  item::all();
+        $customers =  Customer::all();
 
-        return view('receipts.create', compact(['items', 'items_session', 'receiptSession']));
+        return view('receipts.create', compact(['items', 'items_session', 'receiptSession', 'customers']));
     }
 
     /**
@@ -75,12 +81,61 @@ class ReceiptController extends Controller
             return redirect()->route('receipts.create');
         }
 
+        $receipt = $this->storeReceipt($request);
+        $items = $this->selectedItems($request->SELECTED_ITEMS);
 
+        foreach ($items as $item) {
 
+            $receiptItem = new ReceiptItem();
+            $receiptItem->receipt()->associate($receipt);
+            $receiptItem->item()->associate($item);
+            $receiptItem->amount = 1;
+
+            $receiptItem->save();
+        }
 
         return redirect()->route('receipts.index');
     }
+    public function storeReceipt($request)
+    {
+        $receipt = new Receipt();
+        $items = $this->selectedItems($request->SELECTED_ITEMS);
 
+        $receipt->observation = mb_strtoupper($request->note, 'UTF-8');;
+        $receipt->totalPrice = $this->sumPrice($items);
+
+        $customer = Customer::find($request->customer_id);
+
+        if (isset($customer)) {
+            $receipt->customer()->associate($customer);
+        }
+
+        $receipt->save();
+
+        return $receipt;
+    }
+    public function sumPrice($items)
+    {
+        $sum = 0;
+        foreach ($items as $i) {
+            $sum = $i->price + $sum;
+        }
+        return $sum;
+    }
+    public function selectedItems($SELECTED_ITEMS)
+    {
+        $items = array();
+        $index = 0;
+        foreach ($SELECTED_ITEMS as $select_item) {
+            $item = item::find($select_item);
+
+            if (isset($item)) {
+                $items[$index] = $item;
+                $index++;
+            }
+        }
+        return $items;
+    }
     /**
      * Display the specified resource.
      *
@@ -125,16 +180,27 @@ class ReceiptController extends Controller
     {
         //
     }
-
-    public function sessionReceipt(Request $request)
+    public function customerReceipt(Request $request)
     {
 
-        dd($request);
+        $customer = Customer::find($request->customer);
+
 
         $sess = session('receipt');
 
-        $sess['name'] = mb_strtoupper($request->name, 'UTF-8');
-        $sess['phone'] = $request->phone;
+        $sess['customer_id'] = $customer->id;
+        $sess['name'] = mb_strtoupper($customer->name, 'UTF-8');
+        $sess['phone'] = $customer->phone;
+
+        session(['receipt' => $sess]);
+
+        return redirect()->route('receipts.create');
+    }
+    public function sessionReceipt(Request $request)
+    {
+
+        $sess = session('receipt');
+
         $sess['note'] = mb_strtoupper($request->note, 'UTF-8');
 
         array_push($sess['item'], $request->item);

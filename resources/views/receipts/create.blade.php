@@ -7,13 +7,15 @@
         @csrf
 
         <div class="form-group row">
+            <input type="hidden" name="customer_id" @if($receiptSession["customer_id"] !='null' ) value={{$receiptSession["customer_id"]}} @endif>
+
             <div class="col-sm-6 mb-3 mb-sm-4">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control form-control-user" id="name" name="name" aria-describedby="name" placeholder="Insira o nome" @if($receiptSession["name"] !='null' ) value={{$receiptSession["name"]}} @endif>
+                <input type="text" class="form-control form-control-user" id="name" name="name" readonly placeholder="Insira o nome" @if($receiptSession["name"] !='null' ) value={{$receiptSession["name"]}} @endif>
             </div>
             <div class="col-sm-4 mb-3 mb-sm-4">
                 <label for="phone">Telefone</label>
-                <input type="number" class="form-control form-control-user" id="phone" name="phone" aria-describedby="phone" placeholder="Insira o telefone" @if($receiptSession["phone"] !='null' ) value={{$receiptSession["phone"]}} @endif>
+                <input type="number" class="form-control form-control-user" id="phone" name="phone" readonly placeholder="Insira o telefone" @if($receiptSession["phone"] !='null' ) value={{$receiptSession["phone"]}} @endif>
             </div>
             <div class="col-sm-2 mt-4 mb-sm-4">
                 <div class="d-sm-flex align-items-center justify-content-start ">
@@ -100,12 +102,43 @@
                     </svg>
                     &nbsp; Voltar
                 </a>
-                <button type="submit" class="btn btn-primary btn-user btn-block btn-sucess">Submit</button>
+                <button type="submit" class="btn btn-primary btn-user btn-block btn-sucess" form="receiptStore">Submit</button>
             </div>
         </div>
 
         <hr>
     </form>
+    <form class="user" action="{{ route('customerReceipt') }}" method="POST" id="customerReceipt">
+        @csrf
 
+        <div class="modal fade" id="modalCliente" tabindex="-1" aria-labelledby="modalCliente" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cliente</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-sm-10 mb-3 mb-sm-4">
+                            <label for="customer">Cliente</label>
+                            <select name="customer" class="custom-select form-create @if($errors->has('customer')) is-invalid @endif">
+                                @foreach ($customers as $c)
+                                <option value="{{$c->id}}" @if($c->id == old('customer')) selected="true" @endif>
+                                    {{ $c->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" form="customerReceipt">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 @endsection

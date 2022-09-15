@@ -13,4 +13,8 @@ class Customer extends Model
     {
         return $this->belongsTo('\App\Models\Address');
     }
+    public function receipt()
+    {
+        return $this->hasMany('\App\Models\Receipt');
+    }
 }

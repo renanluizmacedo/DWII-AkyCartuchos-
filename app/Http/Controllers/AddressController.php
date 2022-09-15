@@ -23,6 +23,7 @@ class AddressController extends Controller
 
 
         $addresses = Address::all();
+        
         return view('addresses.index', compact('addresses'));
     }
 
@@ -44,7 +45,7 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        self::validation($request);
+        //self::validation($request);
 
         $address = new Address();
 
@@ -56,7 +57,7 @@ class AddressController extends Controller
 
         $address->save();
 
-        return view('addresses.index');
+        return redirect()->route('addresses.index');
     }
 
     /**

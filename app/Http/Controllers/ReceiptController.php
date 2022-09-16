@@ -109,9 +109,9 @@ class ReceiptController extends Controller
      */
     public function show(Receipt $receipt)
     {
-        $receiptItems = ReceiptItem::with(['item'])->where('receipt_id',$receipt->id)->get();
+        $receiptItems = ReceiptItem::with(['item'])->where('receipt_id', $receipt->id)->get();
 
-        return view('receipts.show', compact(['receipt','receiptItems']));
+        return view('receipts.show', compact(['receipt', 'receiptItems']));
     }
 
     /**
@@ -145,7 +145,6 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
-
     }
     public function customerReceipt(Request $request)
     {
@@ -183,7 +182,7 @@ class ReceiptController extends Controller
         $items = Self::selectedItems($request->SELECTED_ITEMS);
 
         $receipt->observation = mb_strtoupper($request->note, 'UTF-8');;
-        $receipt->totalPrice = Self::sumPrice($items);
+        $receipt->totalPrice = Self::sumPrice($items, $request);
 
         $customer = Customer::find($request->customer_id);
 
@@ -195,9 +194,21 @@ class ReceiptController extends Controller
 
         return $receipt;
     }
-    public function sumPrice($items)
+    public function sumPrice($items, $request)
     {
+
+
+        $index = 0;
+
+        foreach ($items as $i) {
+            if ($request->AMOUNT_ITEM[$index] != 1) {
+                $i->price = $i->price * $request->AMOUNT_ITEM[$index];
+            }
+            $index++;
+        }
+
         $sum = 0;
+
         foreach ($items as $i) {
             $sum = $i->price + $sum;
         }

@@ -1,7 +1,7 @@
 @extends('index')
 
 @section('conteudo')
-<h2>Cliente</h2>
+<h2><b> CLIENTE</b></h2>
 <div class="form-group row">
     <div class="col-sm-6 mb-3 mb-sm-0">
         <label for="name">Nome</label>
@@ -14,11 +14,16 @@
 
 </div>
 
-<h2>Items</h2>
-<div class="col-sm-2 mb-3 mb-sm-4 mr-0">
-    <label for="totalPrice">Valor Total</label>
-    <input type="number" class="form-control form-control-user" id="totalPrice" name="totalPrice" readonly aria-describedby="totalPrice" value="{{$receipt->totalPrice}}">
+<div class="d-flex  justify-content-between">
+    <div class="div">
+        <h2><b> ITEMS</b></h2>
+    </div>
+    <div class="col-md-6 div">
+        <label for="totalPrice" class="h3 "><strong> Valor Total</strong></label>
+        <input type="number" class="form-control form-control-user bg-success text-light" id="totalPrice" name="totalPrice" readonly aria-describedby="totalPrice" value="{{$receipt->totalPrice}}">
+    </div>
 </div>
+
 <div class="card-body">
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

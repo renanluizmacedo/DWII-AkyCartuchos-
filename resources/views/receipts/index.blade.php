@@ -20,6 +20,7 @@
                         <tr>
                             <th>Nome Cliente</th>
                             <th>Valor Total</th>
+                            <th>Data/Hora Atendimento</th>
                             <th>Ações</th>
 
                         </tr>
@@ -29,6 +30,7 @@
                         <tr>
                             <td>{{ $receipt->customer->name}}</td>
                             <td>R$ {{ $receipt->totalPrice}}</td>
+                            <td>{{$receipt->created_at}}</td>
                             <td>
                                 <a href="{{ route('receipts.show', $receipt) }}" class="btn btn-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFF" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
@@ -43,6 +45,7 @@
                         <tr>
                             <th>Nome Cliente</th>
                             <th>Valor Total</th>
+                            <th>Data/Hora Atendimento</th>
                             <th>Ações</th>
                         </tr>
                     </tfoot>

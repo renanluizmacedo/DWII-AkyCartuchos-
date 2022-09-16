@@ -17,7 +17,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items =  item::all();
+        $items =  item::orderBy('name','desc')->get();
 
         return view('items.index', compact('items'));
     }
@@ -67,7 +67,9 @@ class ItemController extends Controller
      */
     public function show(item $item)
     {
-        //
+        $itemType =  itemType::find($item->item_type_id);
+
+        return view('items.show', compact(['item','itemType']));
     }
 
     /**
@@ -78,7 +80,9 @@ class ItemController extends Controller
      */
     public function edit(item $item)
     {
-        //
+        $itemType =  itemType::all();
+
+        return view('items.edit', compact(['item', 'itemType']));
     }
 
     /**
@@ -88,9 +92,23 @@ class ItemController extends Controller
      * @param  \App\Models\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateitemRequest $request, item $item)
+    public function update(Request $request, item $item)
     {
-        //
+
+        $itemType = itemType::find($request->type_item);
+
+        if (isset($itemType)) {
+            $item->name = mb_strtoupper($request->name, 'UTF-8');
+            $item->price = $request->price;
+            $item->serial_number = $request->serial_number;
+            $item->itemType()->associate($itemType);
+
+            $item->save();
+
+            return redirect()->route('items.index');
+        }
+
+        return "<h1>Item não Encontrado!</h1>";
     }
 
     /**

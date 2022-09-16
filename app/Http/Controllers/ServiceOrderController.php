@@ -69,7 +69,7 @@ class ServiceOrderController extends Controller
     public function store(Request $request)
     {
         if ($request->botaoSession != null) {
-            $this->sessionServiceOrder($request);
+            Self::sessionServiceOrder($request);
             return redirect()->route('serviceOrder.create');
         }
     }
@@ -132,4 +132,5 @@ class ServiceOrderController extends Controller
 
         session(['serviceOrder' => $sess]);
     }
+
 }

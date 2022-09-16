@@ -16,14 +16,14 @@ class AddressController extends Controller
      */
     public function __construct()
     {
-     //   $this->authorizeResource(Address::class, 'address');
+        //   $this->authorizeResource(Address::class, 'address');
     }
     public function index()
     {
 
 
         $addresses = Address::all();
-        
+
         return view('addresses.index', compact('addresses'));
     }
 
@@ -45,7 +45,7 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //self::validation($request);
+        self::validation($request);
 
         $address = new Address();
 
@@ -68,7 +68,11 @@ class AddressController extends Controller
      */
     public function show(Address $address)
     {
-        //
+        if (isset($address)) {
+            return view('addresses.show', compact('address'));
+        }
+
+        return "<h1>Endereço não Encontrado!</h1>";
     }
 
     /**
@@ -79,7 +83,11 @@ class AddressController extends Controller
      */
     public function edit(Address $address)
     {
-        //
+        if (isset($address)) {
+            return view('addresses.edit', compact('address'));
+        }
+
+        return "<h1>Endereço não Encontrado!</h1>";
     }
 
     /**
@@ -89,9 +97,21 @@ class AddressController extends Controller
      * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAddressRequest $request, Address $address)
+    public function update(Request $request, Address $address)
     {
-        //
+        if (isset($address)) {
+
+            $address->address =  mb_strtoupper($request->address, 'UTF-8');
+            $address->city =  mb_strtoupper($request->city, 'UTF-8');
+            $address->neighborhood =  mb_strtoupper($request->neighborhood, 'UTF-8');
+            $address->zipcode = $request->zipcode;
+            $address->number = $request->number;
+
+            $address->save();
+
+            return redirect()->route('addresses.index');
+        }
+        return "<h1>Endereço não Encontrado!</h1>";
     }
 
     /**
@@ -108,11 +128,11 @@ class AddressController extends Controller
     {
 
         $rules = [
-            'address' => 'required|max:100|min:10',
-            'number' => 'required|max:100|min:10',
-            'neighborhood' => 'required|max:100|min:10',
-            'city' => 'required|max:100|min:10', 
-            'zipcode' => 'required|max:100|min:8', 
+            'address' => 'required|max:100|min:5',
+            'number' => 'required|max:20|min:1',
+            'neighborhood' => 'required|max:100|min:5',
+            'city' => 'required|max:100|min:5',
+            'zipcode' => 'required|max:100|min:5',
         ];
         $msgs = [
             "required" => "O preenchimento do campo [:attribute] é obrigatório!",

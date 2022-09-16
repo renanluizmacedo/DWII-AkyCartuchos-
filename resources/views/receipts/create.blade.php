@@ -5,17 +5,27 @@
 
     <form class="user" action="{{ route('receipts.store') }}" method="POST" id="receiptStore">
         @csrf
-
         <div class="form-group row">
             <input type="hidden" name="customer_id" @if($receiptSession["customer_id"] !='null' ) value={{$receiptSession["customer_id"]}} @endif>
 
             <div class="col-sm-6 mb-3 mb-sm-4">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control form-control-user" id="name" name="name" readonly placeholder="Insira o nome" @if($receiptSession["name"] !='null' ) value={{$receiptSession["name"]}} @endif>
+                <input type="text" class="form-control form-control-user @if($errors->has('name')) is-invalid @endif" id="name" name="name" readonly placeholder="Insira o nome" @if($receiptSession["name"] !='null' ) value={{$receiptSession["name"]}} @endif>
+                @if($errors->has('name'))
+                <div class='invalid-feedback'>
+                    {{ $errors->first('name') }}
+                </div>
+                @endif
             </div>
+
             <div class="col-sm-4 mb-3 mb-sm-4">
                 <label for="phone">Telefone</label>
-                <input type="number" class="form-control form-control-user" id="phone" name="phone" readonly placeholder="Insira o telefone" @if($receiptSession["phone"] !='null' ) value={{$receiptSession["phone"]}} @endif>
+                <input type="number" class="form-control form-control-user @if($errors->has('phone')) is-invalid @endif" id="phone" name="phone" readonly placeholder="Insira o telefone" @if($receiptSession["phone"] !='null' ) value={{$receiptSession["phone"]}} @endif>
+                @if($errors->has('phone'))
+                <div class='invalid-feedback'>
+                    {{ $errors->first('phone') }}
+                </div>
+                @endif
             </div>
             <div class="col-sm-2 mt-4 mb-sm-4">
                 <div class="d-sm-flex align-items-center justify-content-start ">
@@ -24,18 +34,14 @@
             </div>
             <div class="col-sm-10 mb-3 mb-sm-4">
                 <label for="item">Items</label>
-                <select name="item" class="custom-select form-create @if($errors->has('item')) is-invalid @endif">
+                <select name="item" class="custom-select form-create">
                     @foreach ($items as $item)
                     <option value="{{$item->id}}" @if($item->id == old('items')) selected="true" @endif>
                         {{ $item->name }}
                     </option>
                     @endforeach
                 </select>
-                @if($errors->has('item'))
-                <div class='invalid-feedback'>
-                    {{ $errors->first('item') }}
-                </div>
-                @endif
+
             </div>
             <div class="col-sm-2 mb-3 mb-sm-4 p-4">
                 <button type="submit" class="btn btn-primary" form="receiptStore" name="botaoSession" value="botaoSession">
@@ -44,26 +50,27 @@
                     </svg>
                 </button>
             </div>
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th class="col-2">Name</th>
-                                <th class="col-2">Serial Number</th>
-                                <th class="col-2">Price</th>
-                                <th class="col-2">Type</th>
+                                <th>Nome</th>
+                                <th>Numero de Série</th>
+                                <th>Preço</th>
+                                <th>Tipo</th>
                                 <th class="col-2">Quantidade</th>
                                 <th>Ações</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @php $index=0; @endphp
 
                             @foreach ($items_session as $item)
                             <tr>
                                 <input type="hidden" name="SELECTED_ITEMS[]" value="{{ $item->id }}">
+
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->serial_number}}</td>
                                 <td>{{ $item->price}}</td>
@@ -71,27 +78,42 @@
                                 <td>
                                     <input type="number" min="1" class="form-control col-8" id="AMOUNT_ITEM" name="AMOUNT_ITEM[]" aria-describedby="AMOUNT_ITEM" value="1">
                                 </td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger" form="form_{{$item->id}}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFF" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                                <form action="{{ route('receipts.destroy', $item->id) }}" method="DELETE" id="form_{{$item->id}}">
+                                    @csrf
+                                </form>
                             </tr>
-                            @php $index++; @endphp
 
                             @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Name</th>
-                                <th>Serial Number</th>
-                                <th>Price</th>
-                                <th>Type</th>
+                                <th>Nome</th>
+                                <th>Numero de Série</th>
+                                <th>Preço</th>
+                                <th>Tipo</th>
                                 <th class="col-2">Quantidade</th>
                                 <th>Ações</th>
 
                             </tr>
                         </tfoot>
                     </table>
+
                 </div>
             </div>
             <div class="col-sm-12 mb-3 mb-sm-4">
-                <textarea class="form-control" name="note" cols="80" rows="5" placeholder="Observação">{{$receiptSession["note"]}}</textarea>
+                <textarea class="form-control  @if($errors->has('note')) is-invalid @endif" name="note" cols="80" rows="5" placeholder="Observação">{{$receiptSession["note"]}}</textarea>
+                @if($errors->has('note'))
+                <div class='invalid-feedback'>
+                    {{ $errors->first('note') }}
+                </div>
+                @endif
             </div>
         </div>
         <div class="row">

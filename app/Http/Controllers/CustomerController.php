@@ -66,7 +66,10 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+
+        $address = Address::find($customer->address_id);
+
+        return view('customers.show', compact(['customer', 'address']));
     }
 
     /**
@@ -77,7 +80,13 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        $addresses = Address::all();
+
+        if (isset($customer)) {
+            return view('customers.edit', compact(['customer', 'addresses']));
+        }
+
+        return "<h1>Cliente não Encontrado!</h1>";
     }
 
     /**
@@ -87,9 +96,20 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCustomerRequest $request, Customer $customer)
+    public function update(Request $request, Customer $customer)
     {
-        //
+
+        $address = Address::find($request->address);
+
+        $customer->name = mb_strtoupper($request->name, 'UTF-8');
+        $customer->phone = $request->phone;
+        //   $customer->email = $request->name;
+        $customer->address()->associate($address);
+
+        $customer->save();
+
+
+        return redirect()->route('customers.index');
     }
 
     /**

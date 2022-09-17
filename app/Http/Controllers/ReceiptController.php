@@ -82,7 +82,6 @@ class ReceiptController extends Controller
      */
     public function store(Request $request)
     {
-
         if ($request->botaoSession != null) {
             Self::sessionReceipt($request);
             return redirect()->route('receipts.create');
@@ -151,6 +150,24 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
+
+        dd($receipt);
+    }
+    public function removeItemTable($idItem)
+    {
+
+        $sess = session('receipt');
+
+        $newItems = array();
+        foreach($sess['item'] as $i){
+            if($idItem != $i){
+                array_push($newItems,$i);
+            }
+        }
+        $sess['item'] = $newItems;
+        session(['receipt' => $sess]);
+
+        return redirect()->route('receipts.create');
     }
     public function customerReceipt(Request $request)
     {

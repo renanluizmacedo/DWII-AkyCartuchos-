@@ -32,4 +32,9 @@ Route::post('/receipts/customerReceipt', '\App\Http\Controllers\ReceiptControlle
     ->name('customerReceipt')
     ->middleware(['auth']);
 
+
+Route::get('/receipts/removeItemTable/{item}', '\App\Http\Controllers\ReceiptController@removeItemTable')
+    ->name('removeItemTable')
+    ->middleware(['auth']);
+
 require __DIR__ . '/auth.php';

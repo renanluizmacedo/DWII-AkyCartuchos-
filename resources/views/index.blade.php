@@ -212,7 +212,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    <script src="{{ asset('js/alert.js') }}"></script>
+    <script src="{{ asset('js/removeItem.js') }}"></script>
 
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
 

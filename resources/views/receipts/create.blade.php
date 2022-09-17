@@ -2,16 +2,16 @@
 
 @section('conteudo')
 <div class="container-fluid">
-            @if ($receiptSession != null) 
-               @if (array_key_exists('itemInserted', $receiptSession)) 
-                    @if($receiptSession['itemInserted'] == 1)
-                        <x-alert-item-inserted id="hide"></x-alert-item-inserted>
-                    @else
-                        <x-alert-item-not-inserted  id="hide"></x-alert-item-not-inserted>
+    @if ($receiptSession != null)
+    @if (array_key_exists('itemInserted', $receiptSession))
+    @if($receiptSession['itemInserted'] == 1)
+    <x-alert-item-inserted id="hide"></x-alert-item-inserted>
+    @else
+    <x-alert-item-not-inserted id="hide"></x-alert-item-not-inserted>
 
-                    @endif
-                @endif
-            @endif
+    @endif
+    @endif
+    @endif
     <form class="user" action="{{ route('receipts.store') }}" method="POST" id="receiptStore">
         @csrf
         <div class="form-group row">
@@ -66,6 +66,8 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>id</th>
+
                                 <th>Nome</th>
                                 <th>Numero de Série</th>
                                 <th>Preço</th>
@@ -80,6 +82,7 @@
                             @foreach ($items_session as $item)
                             <tr>
                                 <input type="hidden" name="SELECTED_ITEMS[]" value="{{ $item->id }}">
+                                <td>{{ $item->id }}</td>
 
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->serial_number}}</td>
@@ -89,21 +92,22 @@
                                     <input type="number" min="1" class="form-control col-8" id="AMOUNT_ITEM" name="AMOUNT_ITEM[]" aria-describedby="AMOUNT_ITEM" value="1">
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-danger" form="form_{{$item->id}}">
+                                    <a href="{{ route('removeItemTable',$item->id) }}"  class="btn btn-danger" name="form_{$item->id}}" value="{{$item->id}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFF" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                         </svg>
-                                    </button>
+                                    </a>
+
                                 </td>
-                                <form action="{{ route('receipts.destroy', $item->id) }}" method="DELETE" id="form_{{$item->id}}">
-                                    @csrf
-                                </form>
+
                             </tr>
 
                             @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
+                                <th>id</th>
+
                                 <th>Nome</th>
                                 <th>Numero de Série</th>
                                 <th>Preço</th>

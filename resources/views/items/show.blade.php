@@ -2,6 +2,7 @@
 
 @section('conteudo')
 <div class="container-fluid">
+    <h3>INFORMAÇÕES ITEM</h3>
 
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-4">
@@ -11,18 +12,15 @@
 
         <div class="col-sm-6 mb-3 mb-sm-4">
             <label for="serial_number">Numero de Série</label>
-            <input type="number" class="form-control form-control-user" id="serial_number" name="serial_number" readonly 
-            aria-describedby="serial_number" placeholder="Insira o Numero de Série" value="{{$item->serial_number}}">
+            <input type="number" class="form-control form-control-user" id="serial_number" name="serial_number" readonly aria-describedby="serial_number" placeholder="Insira o Numero de Série" value="{{$item->serial_number}}">
         </div>
         <div class="col-sm-6 mb-3 mb-sm-4">
             <label for="price">Valor</label>
-            <input type="number" class="form-control form-control-user" id="price" name="price" readonly 
-            aria-describedby="price" placeholder="Insira o Valor" value="{{$item->price}}">
+            <input type="number" class="form-control form-control-user" id="price" name="price" readonly aria-describedby="price" placeholder="Insira o Valor" value="{{$item->price}}">
         </div>
         <div class="col-sm-6 mb-3 mb-sm-4">
             <label for="type_item">Tipo do item</label>
-            <input type="text" class="form-control form-control-user" id="type_item" name="type_item" 
-            readonly aria-describedby="type_item" placeholder="Insira o nome do Item" value="{{$itemType->name}}">
+            <input type="text" class="form-control form-control-user" id="type_item" name="type_item" readonly aria-describedby="type_item" placeholder="Insira o nome do Item" value="{{$itemType->name}}">
         </div>
 
     </div>

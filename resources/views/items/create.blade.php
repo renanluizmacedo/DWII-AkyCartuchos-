@@ -2,7 +2,7 @@
 
 @section('conteudo')
 <div class="container-fluid">
-
+    <h3>CADASTRAR ITEMS</h3>
     <div class="modal fade" id="tipoItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

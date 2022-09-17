@@ -2,6 +2,7 @@
 
 @section('conteudo')
 <div class="container-fluid">
+    <h3>CADASTRAR CLIENTES</h3>
 
     <form class="user" action="{{ route('customers.store') }}" method="POST">
         @csrf

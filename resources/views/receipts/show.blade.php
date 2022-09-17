@@ -1,7 +1,6 @@
 @extends('index')
 
 @section('conteudo')
-<h2><b> CLIENTE</b></h2>
 <div class="form-group row">
     <div class="col-sm-6 mb-3 mb-sm-0">
         <label for="name">Nome</label>
@@ -15,8 +14,7 @@
 </div>
 
 <div class="d-flex  justify-content-between">
-    <div class="div">
-        <h2><b> ITEMS</b></h2>
+    <div class="div mb-0">
     </div>
     <div class="col-md-6 div">
         <label for="totalPrice" class="h3 "><strong> Valor Total</strong></label>

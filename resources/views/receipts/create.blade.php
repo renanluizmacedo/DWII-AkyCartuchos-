@@ -2,11 +2,21 @@
 
 @section('conteudo')
 <div class="container-fluid">
+            @if ($receiptSession != null) 
+               @if (array_key_exists('itemInserted', $receiptSession)) 
+                    @if($receiptSession['itemInserted'] == 1)
+                        <x-alert-item-inserted id="hide"></x-alert-item-inserted>
+                    @else
+                        <x-alert-item-not-inserted  id="hide"></x-alert-item-not-inserted>
 
+                    @endif
+                @endif
+            @endif
     <form class="user" action="{{ route('receipts.store') }}" method="POST" id="receiptStore">
         @csrf
         <div class="form-group row">
             <input type="hidden" name="customer_id" @if($receiptSession["customer_id"] !='null' ) value={{$receiptSession["customer_id"]}} @endif>
+
 
             <div class="col-sm-6 mb-3 mb-sm-4">
                 <label for="name">Nome</label>

@@ -2,6 +2,7 @@
 
 @section('conteudo')
 <div class="container-fluid">
+    <h3>ALTERAR ITEM</h3>
 
     <form class="user" action="{{ route('items.update',$item->id) }}" method="POST">
         @csrf

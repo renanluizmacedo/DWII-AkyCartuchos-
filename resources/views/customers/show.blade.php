@@ -2,6 +2,7 @@
 
 @section('conteudo')
 <div class="container-fluid">
+    <h3>INFORMAÇÕES CLIENTE</h3>
 
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
@@ -15,7 +16,7 @@
 
     </div>
 
-    <h2>Endereço</h2>
+    <h3>ENDEREÇO</h3>
     <div class="form-group row">
         <div class="col-sm-8 mb-3 mb-sm-2">
             <label for="address">Endereço</label>

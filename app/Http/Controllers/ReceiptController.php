@@ -19,6 +19,10 @@ class ReceiptController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+    }
     public function index()
     {
         $sess = session('receipt');
@@ -29,6 +33,8 @@ class ReceiptController extends Controller
         $sess['note'] = '';
         $sess['item'] = array();
         $sess['route_action'] = Route::currentRouteName();
+
+        unset($sess['itemInserted']);
 
         session(['receipt' => $sess]);
         $receipts = Receipt::with(['customer'])->get();
@@ -156,6 +162,10 @@ class ReceiptController extends Controller
 
         $sess['customer_id'] = $customer->id;
         $sess['name'] = mb_strtoupper($customer->name, 'UTF-8');
+
+        if (array_key_exists('itemInserted', $sess)) {
+            unset($sess['itemInserted']);
+        }
         $sess['phone'] = $customer->phone;
 
         session(['receipt' => $sess]);
@@ -171,6 +181,9 @@ class ReceiptController extends Controller
 
         if (!in_array($request->item, $sess['item'])) {
             array_push($sess['item'], $request->item);
+            $sess['itemInserted'] = 1;
+        } else {
+            $sess['itemInserted'] = 0;
         }
 
         $sess['route_action'] = Route::currentRouteName();

@@ -2,6 +2,7 @@
 
 @section('conteudo')
 <div class="container-fluid">
+    <h3>ALTERAR CLIENTES</h3>
 
     <form class="user" action="{{ route('customers.update',$customer->id) }}" method="POST">
         @csrf
@@ -9,13 +10,11 @@
         <div class="form-group row">
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control form-control-user" id="name" name="name" 
-                aria-describedby="name" placeholder="Insira o nome" value="{{$customer->name}}">
+                <input type="text" class="form-control form-control-user" id="name" name="name" aria-describedby="name" placeholder="Insira o nome" value="{{$customer->name}}">
             </div>
             <div class="col-sm-6 mb-3 mb-sm-4">
                 <label for="phone">Telefone</label>
-                <input type="number" class="form-control form-control-user" id="phone" name="phone" 
-                aria-describedby="phone" placeholder="Insira o telefone" value="{{$customer->phone}}">
+                <input type="number" class="form-control form-control-user" id="phone" name="phone" aria-describedby="phone" placeholder="Insira o telefone" value="{{$customer->phone}}">
             </div>
             <div class="col-sm-12 mb-3 mb-sm-0">
                 <label for="address">Endereço</label>

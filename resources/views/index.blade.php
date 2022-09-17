@@ -32,7 +32,7 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard')}}">
                 <div class="sidebar-brand-icon rotate-n-15">
 
-                    <i class="fas fa-laugh-wink"></i>
+                    <img src="/img/logo_marca.png" alt="" width="70px">
                 </div>
                 <div class="sidebar-brand-text mx-3">Aky Cartuchos</div>
             </a>
@@ -156,16 +156,21 @@
                                 </a>
                                 <div class="dropdown-item" href="#">
                                     <!-- Authentication -->
-                                    <i class=" fas fa-sign-out-alt fa-sm fa-fw  text-gray-400"></i>
-                                    <form method="POST" action="{{ route('logout') }}">
+                                    <div class="row justify-content-center">
+                                        <div class="div">
+                                            <i class=" fas fa-sign-out-alt fa-sm fa-fw  text-gray-400"></i>
+                                        </div>
+                                        <div class="div">
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+                                                <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                                    {{ __('Log Out') }}
+                                                </x-responsive-nav-link>
+                                            </form>
+                                        </div>
+                                    </div>
 
-                                        @csrf
-
-                                        <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                                            {{ __('Log Out') }}
-                                        </x-responsive-nav-link>
-                                    </form>
                                 </div>
                             </div>
 
@@ -207,7 +212,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    <script src="{{ asset('js/modal.js') }}"></script>
+    <script src="{{ asset('js/alert.js') }}"></script>
 
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
 

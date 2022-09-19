@@ -16,6 +16,6 @@ class ReceiptItem extends Model
     }
     public function item()
     {
-        return $this->belongsTo('\App\Models\item');
+        return $this->belongsTo('\App\Models\Item');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreitemRequest;
 use App\Http\Requests\UpdateitemRequest;
-use App\Models\item;
+use App\Models\Item;
 use App\Models\itemType;
 use Illuminate\Http\Request;
 
@@ -17,11 +17,11 @@ class ItemController extends Controller
      */
     public function __construct()
     {
-        $this->authorizeResource(item::class, 'item');
+        $this->authorizeResource(Item::class, 'item');
     }
     public function index()
     {
-        $items =  item::orderBy('name','desc')->get();
+        $items =  Item::orderBy('name','desc')->get();
 
         return view('items.index', compact('items'));
     }
@@ -66,10 +66,10 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(item $item)
+    public function show(Item $item)
     {
         $itemType =  itemType::find($item->item_type_id);
 
@@ -79,10 +79,10 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(item $item)
+    public function edit(Item $item)
     {
         $itemType =  itemType::all();
 
@@ -93,10 +93,10 @@ class ItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateitemRequest  $request
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, item $item)
+    public function update(Request $request, Item $item)
     {
 
         $itemType = itemType::find($request->type_item);
@@ -118,10 +118,10 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(item $item)
+    public function destroy(Item $item)
     {
         //
     }

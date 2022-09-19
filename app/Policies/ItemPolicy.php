@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\User;
-use App\Models\item;
-use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Facades\UserPermissions;
+use App\Models\Item;
+use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ItemPolicy
 {
@@ -27,11 +27,12 @@ class ItemPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, item $item)
+    public function view(User $user, Item $item)
     {
+
         return UserPermissions::isAuthorized('items.show');
 
     }
@@ -52,10 +53,10 @@ class ItemPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, item $item)
+    public function update(User $user, Item $item)
     {
         return UserPermissions::isAuthorized('items.edit');
 
@@ -65,22 +66,23 @@ class ItemPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, item $item)
+    public function delete(User $user, Item $item)
     {
-        //
+        return UserPermissions::isAuthorized('items.destroy');
+
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, item $item)
+    public function restore(User $user, Item $item)
     {
         //
     }
@@ -89,10 +91,10 @@ class ItemPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\item  $item
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, item $item)
+    public function forceDelete(User $user, Item $item)
     {
         //
     }

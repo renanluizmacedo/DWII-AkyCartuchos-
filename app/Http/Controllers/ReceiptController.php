@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateReceiptRequest;
 use App\Models\Receipt;
 use App\Models\ReceiptItem;
-use App\Models\item;
+use App\Models\Item;
 use App\Models\Customer;
 
 use Illuminate\Http\Request;
@@ -61,7 +61,7 @@ class ReceiptController extends Controller
                 $i = 0;
 
                 foreach ($receiptSession['item'] as $it) {
-                    if (item::find($it) != null) {
+                    if (Item::find($it) != null) {
                         $items_session[$i] = Item::find($it);
                     }
                     $i++;
@@ -250,7 +250,7 @@ class ReceiptController extends Controller
         $items = array();
         $index = 0;
         foreach ($SELECTED_ITEMS as $select_item) {
-            $item = item::find($select_item);
+            $item = Item::find($select_item);
 
             if (isset($item)) {
                 $items[$index] = $item;

@@ -9,6 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <title>Aky Cartuchos - Dashboard</title>
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">

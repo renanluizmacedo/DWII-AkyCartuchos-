@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Receipt;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Facades\UserPermissions;
 
 class ReceiptPolicy
 {
@@ -18,7 +19,8 @@ class ReceiptPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return UserPermissions::isAuthorized('receipts.index');
+
     }
 
     /**
@@ -30,7 +32,8 @@ class ReceiptPolicy
      */
     public function view(User $user, Receipt $receipt)
     {
-        //
+        return UserPermissions::isAuthorized('receipts.show');
+
     }
 
     /**
@@ -41,7 +44,8 @@ class ReceiptPolicy
      */
     public function create(User $user)
     {
-        //
+        return UserPermissions::isAuthorized('receipts.create');
+
     }
 
     /**
@@ -53,7 +57,8 @@ class ReceiptPolicy
      */
     public function update(User $user, Receipt $receipt)
     {
-        //
+        return UserPermissions::isAuthorized('receipts.edit');
+
     }
 
     /**

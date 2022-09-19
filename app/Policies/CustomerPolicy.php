@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Facades\UserPermissions;
 
 class CustomerPolicy
 {
@@ -16,9 +17,11 @@ class CustomerPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
+
     public function viewAny(User $user)
     {
-        //
+        return UserPermissions::isAuthorized('customers.index');
+
     }
 
     /**
@@ -30,7 +33,8 @@ class CustomerPolicy
      */
     public function view(User $user, Customer $customer)
     {
-        //
+        return UserPermissions::isAuthorized('customers.show');
+
     }
 
     /**
@@ -41,7 +45,8 @@ class CustomerPolicy
      */
     public function create(User $user)
     {
-        //
+        return UserPermissions::isAuthorized('customers.create');
+
     }
 
     /**
@@ -53,7 +58,8 @@ class CustomerPolicy
      */
     public function update(User $user, Customer $customer)
     {
-        //
+        return UserPermissions::isAuthorized('customers.update');
+
     }
 
     /**
@@ -65,7 +71,8 @@ class CustomerPolicy
      */
     public function delete(User $user, Customer $customer)
     {
-        //
+        return UserPermissions::isAuthorized('customers.destroy');
+
     }
 
     /**

@@ -17,7 +17,11 @@ class DatabaseSeeder extends Seeder
             AddressSeeder::class,
             CustomerSeeder::class,
             ItemTypeSeeder::class,
-            ItemSeeder::class
+            ItemSeeder::class,
+            RoleSeeder::class,
+            ResourceSeeder::class,
+            PermissionSeeder::class
+
         ]);
 
     }

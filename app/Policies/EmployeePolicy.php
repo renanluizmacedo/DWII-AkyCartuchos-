@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\User;
-use App\Models\serviceOrder;
-use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Facades\UserPermissions;
+use App\Models\Employee;
+use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ServiceOrderPolicy
+class EmployeePolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +19,21 @@ class ServiceOrderPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return UserPermissions::isAuthorized('employees.index');
+
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, serviceOrder $serviceOrder)
+    public function view(User $user, Employee $employee)
     {
-        //
+        return UserPermissions::isAuthorized('employees.show');
+
     }
 
     /**
@@ -49,22 +51,23 @@ class ServiceOrderPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, serviceOrder $serviceOrder)
+    public function update(User $user, Employee $employee)
     {
-        //
+        return UserPermissions::isAuthorized('employees.edit');
+
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, serviceOrder $serviceOrder)
+    public function delete(User $user, Employee $employee)
     {
         //
     }
@@ -73,10 +76,10 @@ class ServiceOrderPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, serviceOrder $serviceOrder)
+    public function restore(User $user, Employee $employee)
     {
         //
     }
@@ -85,10 +88,10 @@ class ServiceOrderPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, serviceOrder $serviceOrder)
+    public function forceDelete(User $user, Employee $employee)
     {
         //
     }

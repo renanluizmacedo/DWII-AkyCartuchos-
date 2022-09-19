@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\User;
-use App\Models\serviceOrder;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Facades\UserPermissions;
 
-class ServiceOrderPolicy
+class PermissionPolicy
 {
     use HandlesAuthorization;
 
@@ -26,10 +26,10 @@ class ServiceOrderPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, serviceOrder $serviceOrder)
+    public function view(User $user, Permission $permission)
     {
         //
     }
@@ -49,10 +49,10 @@ class ServiceOrderPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, serviceOrder $serviceOrder)
+    public function update(User $user, Permission $permission)
     {
         //
     }
@@ -61,10 +61,10 @@ class ServiceOrderPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, serviceOrder $serviceOrder)
+    public function delete(User $user, Permission $permission)
     {
         //
     }
@@ -73,10 +73,10 @@ class ServiceOrderPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, serviceOrder $serviceOrder)
+    public function restore(User $user, Permission $permission)
     {
         //
     }
@@ -85,10 +85,10 @@ class ServiceOrderPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\serviceOrder  $serviceOrder
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, serviceOrder $serviceOrder)
+    public function forceDelete(User $user, Permission $permission)
     {
         //
     }

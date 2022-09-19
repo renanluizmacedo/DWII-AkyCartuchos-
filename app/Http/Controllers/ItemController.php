@@ -15,6 +15,10 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->authorizeResource(item::class, 'item');
+    }
     public function index()
     {
         $items =  item::orderBy('name','desc')->get();

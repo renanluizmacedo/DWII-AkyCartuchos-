@@ -16,7 +16,7 @@ class AddressController extends Controller
      */
     public function __construct()
     {
-        //   $this->authorizeResource(Address::class, 'address');
+           $this->authorizeResource(Address::class, 'address');
     }
     public function index()
     {

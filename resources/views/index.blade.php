@@ -32,7 +32,7 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard')}}">
-                <div class="sidebar-brand-icon rotate-n-15">
+                <div class="sidebar-brand-icon">
 
                     <img src="/img/logo_marca.png" alt="" width="70px">
                 </div>
@@ -47,6 +47,20 @@
                 <a class="nav-link" href="{{route('dashboard')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
+            </li>
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Funcionarios</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Funcionarios:</h6>
+                        <a class="collapse-item" href="{{route('employees.index')}}">Funcionarios</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -89,7 +103,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Serviços</h6>
-                        <a class="collapse-item" href="{{route('serviceOrder.index')}}">Ordem de serviço</a>
+                        <a class="collapse-item isDisabled" disabled href="{{route('serviceOrder.index')}}">Ordem de serviço</a>
                         <a class="collapse-item" href="{{route('receipts.index')}}">Recibo</a>
                         <div class="collapse-divider"></div>
 

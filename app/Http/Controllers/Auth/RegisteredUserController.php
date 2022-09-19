@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Facades\UserPermissions;
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,18 +39,26 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+
+
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $role = Role::where('name', 'ASSISTENTE DE VENDAS')->take(1)->get();
+
+        $user = new User();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role()->associate($role[0]);
+
+        $user->save();
 
         event(new Registered($user));
 
-        Auth::login($user);
+        //    Auth::login($user);
+        UserPermissions::loadPermissions($user->role_id);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('login');
     }
 }

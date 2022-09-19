@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\item;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Facades\UserPermissions;
 
 class ItemPolicy
 {
@@ -18,7 +19,8 @@ class ItemPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return UserPermissions::isAuthorized('items.index');
+
     }
 
     /**
@@ -30,7 +32,8 @@ class ItemPolicy
      */
     public function view(User $user, item $item)
     {
-        //
+        return UserPermissions::isAuthorized('items.show');
+
     }
 
     /**
@@ -41,7 +44,8 @@ class ItemPolicy
      */
     public function create(User $user)
     {
-        //
+        return UserPermissions::isAuthorized('items.create');
+
     }
 
     /**
@@ -53,7 +57,8 @@ class ItemPolicy
      */
     public function update(User $user, item $item)
     {
-        //
+        return UserPermissions::isAuthorized('items.edit');
+
     }
 
     /**

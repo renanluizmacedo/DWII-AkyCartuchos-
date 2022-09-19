@@ -22,6 +22,7 @@ class ReceiptController extends Controller
 
     public function __construct()
     {
+        $this->authorizeResource(Receipt::class, 'receipt');
     }
     public function index()
     {

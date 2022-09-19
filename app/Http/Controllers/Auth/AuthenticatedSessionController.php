@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Facades\UserPermissions;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
@@ -32,6 +33,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        UserPermissions::loadPermissions(Auth::user()->role_id);
+        
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -48,7 +51,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-        return redirect()->route('login');
 
+        return redirect()->route('login');
     }
 }

@@ -16,6 +16,10 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->authorizeResource(Customer::class, 'customer');
+    }
     public function index()
     {
         $customers = Customer::all();

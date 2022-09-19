@@ -48,21 +48,22 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <hr class="sidebar-divider">
+            @if(UserPermissions::isAdmin())
+                <hr class="sidebar-divider">
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Funcionarios</span>
-                </a>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Funcionarios:</h6>
-                        <a class="collapse-item" href="{{route('employees.index')}}">Funcionarios</a>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Funcionarios</span>
+                    </a>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Funcionarios:</h6>
+                            <a class="collapse-item" href="{{route('employees.index')}}">Funcionarios</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-
+                </li>
+            @endif
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -162,17 +163,13 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{route('showEmployeeLog')}}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Configurações
-                                </a>
                                 <div class="dropdown-item" href="#">
                                     <!-- Authentication -->
-                                    <div class="row justify-content-center">
+                                    <div class="row justify-content-center ">
                                         <div class="div">
                                             <i class=" fas fa-sign-out-alt fa-sm fa-fw  text-gray-400"></i>
                                         </div>

@@ -21,9 +21,11 @@
                 <label for="role">Privilegio</label>
                 <select name="role" class="custom-select form-create @if($errors->has('role')) is-invalid @endif">
                     @foreach ($roles as $item)
-                    <option value="{{$item->id}}" @if($item->id == old('role')) selected="true" @endif>
-                        {{ $item->name }}
-                    </option>
+                        @if(Auth::user()->role->id != $item->id)
+                            <option value="{{$item->id}}" @if($item->id == $employee->role->id) selected="true" @endif>
+                                {{ $item->name }}
+                            </option>
+                        @endif
                     @endforeach
                 </select>
                 @if($errors->has('role'))

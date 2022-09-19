@@ -33,6 +33,10 @@ Route::post('/receipts/customerReceipt', '\App\Http\Controllers\ReceiptControlle
     ->name('customerReceipt')
     ->middleware(['auth']);
 
+Route::get('/showInfoLogin', '\App\Http\Controllers\EmployeeController@showEmployeeLog')
+    ->name('showEmployeeLog')
+    ->middleware(['auth']);
+
 
 Route::get('/receipts/removeItemTable/{item}', '\App\Http\Controllers\ReceiptController@removeItemTable')
     ->name('removeItemTable')

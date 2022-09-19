@@ -9,10 +9,9 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Tabela de Clientes</h6>
             @if(UserPermissions::isAuthorized('customers.create'))
-
-            <div class="d-sm-flex align-items-center justify-content-end mb-4">
-                <a href="{{route('customers.create')}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus fa-md text-white-50"></i>Adicionar</a>
-            </div>
+                <div class="d-sm-flex align-items-center justify-content-end mb-4">
+                    <a href="{{route('customers.create')}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus fa-md text-white-50"></i>Adicionar</a>
+                </div>
             @endif
         </div>
         <div class="card-body">

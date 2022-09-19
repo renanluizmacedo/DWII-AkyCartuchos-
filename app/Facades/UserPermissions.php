@@ -13,12 +13,11 @@ class UserPermissions
         $sess = array();
         $perm = Permission::with(['resource'])->where('role_id', $user_type)->get();
 
-
-        
         foreach ($perm as $item) {
 
             $sess[$item->resource->name] = (bool) $item->permissao;
         }
+
         session(['user_permissions' => $sess]);
 
     }
@@ -29,5 +28,18 @@ class UserPermissions
         $permissions = session('user_permissions');
 
         return $permissions[$rule];
+    }
+
+    
+    public static function isAdmin()
+    {
+        $permissions = session('user_permissions');
+
+        foreach($permissions as $perm){
+            if($perm == false){
+                return false;
+            }
+        }
+        return true;
     }
 }

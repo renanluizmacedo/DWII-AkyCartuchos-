@@ -21,8 +21,6 @@ class RoleSeeder extends Seeder
         DB::table('roles')->insert([
             'name' => 'SUPERVISOR',
         ]);
-        DB::table('roles')->insert([
-            'name' => 'ASSISTENTE DE VENDAS',
-        ]);
+
     }
 }

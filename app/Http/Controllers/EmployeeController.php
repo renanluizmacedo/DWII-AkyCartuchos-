@@ -99,6 +99,10 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employees  $Employees
      * @return \Illuminate\Http\Response
      */
+    public function showEmployeeLog(){
+
+        return view('employees.showEmployeeLog');
+    }
     public function destroy(Employee $employee)
     {
         //

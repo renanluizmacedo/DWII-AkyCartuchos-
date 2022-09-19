@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
 {
-    
+
     /**
      * Run the database seeds.
      *
@@ -17,15 +17,49 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-      //  for ($i = 1; $i <= 3; $i++) {
-            for ($j = 1; $j <= 25; $j++) {
 
-                DB::table('permissions')->insert([
-                    'resource_id' => $j,
-                    'role_id' => 1,
-                    'permissao' => 1,
-                ]);
+        for ($j = 1; $j <= 25; $j++) {
+            DB::table('permissions')->insert([
+                'resource_id' => $j,
+                'role_id' => 1,
+                'permissao' => 1,
+            ]);
+        }
+        $perm = 0;
+
+        for ($j = 1; $j <= 25; $j++) {
+            if ($j == 1 || $j == 5) {
+                $perm = 1;
+            } else {
+                $perm = 0;
             }
-    //    }
+            DB::table('permissions')->insert([
+
+                'resource_id' => $j,
+                'role_id' => 2,
+                'permissao' => $perm,
+            ]);
+        }
+        for ($j = 1; $j <= 25; $j++) {
+            if ($j == 1 || $j == 5) {
+                $perm = 1;
+            } else {
+                $perm = 0;
+            }
+            DB::table('permissions')->insert([
+
+                'resource_id' => $j,
+                'role_id' => 3,
+                'permissao' => $perm,
+            ]);
+        }
+        for ($j = 1; $j <= 25; $j++) {
+            DB::table('permissions')->insert([
+
+                'resource_id' => $j,
+                'role_id' => 4,
+                'permissao' => 1,
+            ]);
+        }
     }
 }

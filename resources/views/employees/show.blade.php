@@ -2,7 +2,7 @@
 
 @section('conteudo')
 <div class="container-fluid">
-    <h3>CADASTRAR FUNCIONARIO</h3>
+    <h3>INFORMAÇÕES FUNCIONARIO</h3>
 
     <form class="user" action="{{ route('employees.store') }}" method="POST">
         @csrf

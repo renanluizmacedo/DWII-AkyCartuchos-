@@ -41,7 +41,7 @@
 
             </div>
             <div class="col-md-6">
-                <button type="submit" class=" btn-success btn-user btn-block ">Submit</button>
+                <button type="submit" class=" btn-success btn-user btn-block ">Salvar</button>
 
             </div>
         </div>

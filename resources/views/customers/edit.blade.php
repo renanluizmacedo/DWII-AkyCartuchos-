@@ -20,7 +20,7 @@
                 <label for="address">Endereço</label>
                 <select name="address" class="custom-select form-create @if($errors->has('address')) is-invalid @endif">
                     @foreach ($addresses as $item)
-                    <option value="{{$item->id}}" @if($item->id == old('address')) selected="true" @endif>
+                    <option value="{{$item->id}}" @if($item->id == $customer->address->id) selected="true" @endif>
                         {{ $item->address }}
                     </option>
                     @endforeach
@@ -45,7 +45,7 @@
 
             </div>
             <div class="col-md-6">
-                <button type="submit" class=" btn-user btn-block btn-success">Submit</button>
+                <button type="submit" class=" btn-user btn-block btn-success">Salvar</button>
 
             </div>
         </div>

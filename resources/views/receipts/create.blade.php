@@ -66,7 +66,6 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>id</th>
 
                                 <th>Nome</th>
                                 <th>Numero de Série</th>
@@ -82,7 +81,6 @@
                             @foreach ($items_session as $item)
                             <tr>
                                 <input type="hidden" name="SELECTED_ITEMS[]" value="{{ $item->id }}">
-                                <td>{{ $item->id }}</td>
 
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->serial_number}}</td>
@@ -106,7 +104,6 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>id</th>
 
                                 <th>Nome</th>
                                 <th>Numero de Série</th>
@@ -138,7 +135,7 @@
                     </svg>
                     &nbsp; Voltar
                 </a>
-                <button type="submit" class="btn btn-primary btn-user btn-block btn-sucess" form="receiptStore">Submit</button>
+                <button type="submit" class="btn btn-primary btn-user btn-block btn-sucess" form="receiptStore">Salvar</button>
             </div>
         </div>
 
@@ -169,8 +166,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" form="customerReceipt">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-success" form="customerReceipt">Salvar</button>
                     </div>
                 </div>
             </div>

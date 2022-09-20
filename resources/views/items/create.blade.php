@@ -99,7 +99,7 @@
 
             </div>
             <div class="col-md-6">
-                <button type="submit" class="btn-user btn-block btn-success">Submit</button>
+                <button type="submit" class="btn-user btn-block btn-success">Salvar</button>
 
             </div>
         </div>

@@ -21,6 +21,7 @@ class CreateReceiptsTable extends Migration
    
             $table->string('observation');
             $table->decimal('totalPrice');
+            $table->softDeletes();
 
             $table->timestamps();
         });

@@ -58,7 +58,7 @@ class CustomerPolicy
      */
     public function update(User $user, Customer $customer)
     {
-        return UserPermissions::isAuthorized('customers.update');
+        return UserPermissions::isAuthorized('customers.edit');
 
     }
 

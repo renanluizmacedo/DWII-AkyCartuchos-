@@ -21,7 +21,7 @@ class CreateRolesTable extends Migration
             $table->timestamps();
         });
         DB::table('roles')->insert([
-            'name' => 'admin',
+            'name' => 'ADMINISTRADOR',
         ]);
         DB::table('roles')->insert([
             'name' => 'ASSISTENTE DE VENDAS',

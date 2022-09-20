@@ -21,7 +21,7 @@ class ItemController extends Controller
     }
     public function index()
     {
-        $items =  Item::orderBy('name','desc')->get();
+        $items =  Item::orderBy('name', 'desc')->get();
 
         return view('items.index', compact('items'));
     }
@@ -73,7 +73,7 @@ class ItemController extends Controller
     {
         $itemType =  itemType::find($item->item_type_id);
 
-        return view('items.show', compact(['item','itemType']));
+        return view('items.show', compact(['item', 'itemType']));
     }
 
     /**
@@ -123,6 +123,11 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+
+        if (isset($item)) {
+            $item->delete();
+        }
+
+        return redirect()->route('items.index');
     }
 }

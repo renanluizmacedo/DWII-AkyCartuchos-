@@ -20,6 +20,8 @@ class CreateItemsTable extends Migration
             $table->decimal('price');
             $table->unsignedBigInteger('item_type_id');
             $table->foreign('item_type_id')->references('id')->on('item_types');
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

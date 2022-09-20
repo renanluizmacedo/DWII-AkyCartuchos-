@@ -22,7 +22,10 @@ class CustomerController extends Controller
     }
     public function index()
     {
-        $customers = Customer::all();
+
+        $customers = Customer::with(['address' => function ($q) {
+            $q->withTrashed();
+        }])->get();
 
         return view('customers.index', compact('customers'));
     }
@@ -124,6 +127,9 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        if (isset($customer)) {
+            $customer->delete();
+        }
+        return redirect()->route('customers.index');
     }
 }

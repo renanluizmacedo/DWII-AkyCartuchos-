@@ -38,6 +38,7 @@ class ReceiptController extends Controller
         unset($sess['itemInserted']);
 
         session(['receipt' => $sess]);
+
         $receipts = Receipt::with(['customer'])->get();
 
         return view('receipts.index', compact('receipts'));
@@ -115,7 +116,9 @@ class ReceiptController extends Controller
      */
     public function show(Receipt $receipt)
     {
-        $receiptItems = ReceiptItem::with(['item'])->where('receipt_id', $receipt->id)->get();
+        $receiptItems = ReceiptItem::with(['item' => function ($q) {
+            $q->withTrashed();
+        }])->where('receipt_id', $receipt->id)->get();
 
         return view('receipts.show', compact(['receipt', 'receiptItems']));
     }
@@ -151,8 +154,10 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
-
-        dd($receipt);
+        if (isset($receipt)) {
+            $receipt->delete();
+        }
+        return redirect()->route('receipts.index');
     }
     public function removeItemTable($idItem)
     {
@@ -160,9 +165,9 @@ class ReceiptController extends Controller
         $sess = session('receipt');
 
         $newItems = array();
-        foreach($sess['item'] as $i){
-            if($idItem != $i){
-                array_push($newItems,$i);
+        foreach ($sess['item'] as $i) {
+            if ($idItem != $i) {
+                array_push($newItems, $i);
             }
         }
         $sess['item'] = $newItems;

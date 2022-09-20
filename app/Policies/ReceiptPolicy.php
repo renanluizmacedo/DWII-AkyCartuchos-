@@ -70,7 +70,8 @@ class ReceiptPolicy
      */
     public function delete(User $user, Receipt $receipt)
     {
-        //
+        return UserPermissions::isAuthorized('receipts.destroy');
+
     }
 
     /**

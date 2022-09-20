@@ -1,7 +1,8 @@
 function showRemoveModal(id, nome) {
+	console.log(nome);
 	$('#id_remove').val(id);
 	$('#removeModal').modal().find('.modal-body').html("");
-	$('#removeModal').modal().find('.modal-body').append("Deseja remover o registro <b class='text-danger'>'"+nome+"'</b> ?");
+	$('#removeModal').modal().find('.modal-body').append("Deseja remover o registro <b class='text-danger'>"+nome+"</b> ?");
 	$("#removeModal").modal('show');
 }
 

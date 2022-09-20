@@ -13,8 +13,8 @@
     <!-- Custom styles for this template-->
     <title>Aky Cartuchos - Dashboard</title>
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
@@ -48,7 +48,7 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            @if(UserPermissions::isAdmin())
+            @if(UserPermissions::hasPrivileges())
             <hr class="sidebar-divider">
 
             <li class="nav-item">

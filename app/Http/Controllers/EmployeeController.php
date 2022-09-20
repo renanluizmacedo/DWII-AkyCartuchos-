@@ -20,12 +20,11 @@ class EmployeeController extends Controller
     {
         $this->authorizeResource(Employee::class, 'employee');
     }
-    
+
     public function index()
     {
 
         $employees = Employee::with('role')->get();
-
         return view('employees.index', compact('employees'));
     }
 
@@ -71,7 +70,7 @@ class EmployeeController extends Controller
     {
 
         $roles  =  Role::all();
-        return view('employees.edit', compact(['roles','employee']));
+        return view('employees.edit', compact(['roles', 'employee']));
     }
 
     /**
@@ -87,7 +86,7 @@ class EmployeeController extends Controller
         $employee->name = $request->name;
         $employee->email = $request->email;
         $employee->role()->associate($request->role);
-        
+
         $employee->save();
 
         return redirect()->route('employees.index');
@@ -99,7 +98,8 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employees  $Employees
      * @return \Illuminate\Http\Response
      */
-    public function showEmployeeLog(){
+    public function showEmployeeLog()
+    {
 
         return view('employees.showEmployeeLog');
     }

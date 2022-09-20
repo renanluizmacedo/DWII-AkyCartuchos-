@@ -9925,6 +9925,16 @@ a:focus {
         height: calc(20rem - 43px) !important;
     }
 }
+.bg-safe-area-image {
+    background: url("/img/informatica.jpg");
+    background-position: center;
+    background-size: 140%;
+}
+.bg-confirm-password-image {
+    background: url("/img/impressora_bg_azul.jpg");
+    background-position: center;
+    background-size: 140%;
+}
 .bg-login-image {
     background: url("/img/logo_marca.png");
     background-position: center;
@@ -9938,6 +9948,11 @@ a:focus {
 }
 .bg-password-image {
     background: url("/img/impressora.jpg");
+    background-position: center;
+    background-size: cover;
+}
+.bg-reset-password-image {
+    background: url("/img/logo_marca.png");
     background-position: center;
     background-size: cover;
 }

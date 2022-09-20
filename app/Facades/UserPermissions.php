@@ -18,6 +18,7 @@ class UserPermissions
             $sess[$item->resource->name] = (bool) $item->permissao;
         }
 
+
         session(['user_permissions' => $sess]);
 
     }
@@ -30,8 +31,15 @@ class UserPermissions
         return $permissions[$rule];
     }
 
-    
-    public static function isAdmin()
+    public static function listEmployee($user)
+    {
+        if($user->role->name == 'ADMINISTRADOR'){
+            return false;
+        }
+
+        return true;
+    }
+    public static function hasPrivileges()
     {
         $permissions = session('user_permissions');
 

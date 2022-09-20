@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\HomeEvent;
 use App\Facades\UserPermissions;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
@@ -32,10 +33,10 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
         UserPermissions::loadPermissions(Auth::user()->role_id);
-        
-        return redirect()->intended(RouteServiceProvider::HOME);
+        event(new HomeEvent("Parâmetro Evento"));
+
+        return redirect()->route('dashboard');
     }
 
     /**

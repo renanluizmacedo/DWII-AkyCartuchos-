@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Facades\UserPermissions;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class ConfirmablePasswordController extends Controller
                 'password' => __('auth.password'),
             ]);
         }
-
+        
         $request->session()->put('auth.password_confirmed_at', time());
 
         return redirect()->intended(RouteServiceProvider::HOME);

@@ -11,17 +11,17 @@
         <div class="form-group row">
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control form-control-user" id="name" name="name" aria-describedby="name" placeholder="Insira o nome" value="{{$employee->name}}">
+                <input type="text" class="form-control form-control-user" id="name" readonly name="name" aria-describedby="name" placeholder="Insira o nome" value="{{$employee->name}}">
             </div>
             <div class="col-sm-6 mb-3 mb-sm-4">
                 <label for="email">Email</label>
-                <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="email" placeholder="Insira o Email" value="{{$employee->email}}">
+                <input type="email" class="form-control form-control-user" id="email" readonly name="email" aria-describedby="email" placeholder="Insira o Email" value="{{$employee->email}}">
             </div>
             <div class="col-sm-12 mb-3 mb-sm-0">
                 <label for="role">Privilegio</label>
                 <select name="role" class="custom-select form-create @if($errors->has('role')) is-invalid @endif">
                     @foreach ($roles as $item)
-                        @if(Auth::user()->role->id != $item->id)
+                        @if($item->name != 'ADMINISTRADOR')
                             <option value="{{$item->id}}" @if($item->id == $employee->role->id) selected="true" @endif>
                                 {{ $item->name }}
                             </option>

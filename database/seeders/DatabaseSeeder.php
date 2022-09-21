@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             ItemSeeder::class,
             RoleSeeder::class,
             ResourceSeeder::class,
-            PermissionSeeder::class
+            PermissionSeeder::class,
+            EmployeeSeeder::class
 
         ]);
 

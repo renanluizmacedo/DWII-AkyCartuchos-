@@ -35,8 +35,6 @@ class ReceiptController extends Controller
         $sess['item'] = array();
         $sess['route_action'] = Route::currentRouteName();
 
-        unset($sess['itemInserted']);
-
         session(['receipt' => $sess]);
 
         $receipts = Receipt::with(['customer'])->get();
@@ -49,10 +47,13 @@ class ReceiptController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
 
         $receiptSession = session('receipt');
+        Self::alertDismiss();
+        Self::alertDismissEmptyList();
 
         $items_session = [];
 
@@ -85,13 +86,25 @@ class ReceiptController extends Controller
     public function store(Request $request)
     {
         if ($request->botaoSession != null) {
+
             Self::sessionReceipt($request);
+
             return redirect()->route('receipts.create');
         }
         self::validation($request);
 
+        if (!isset($request->SELECTED_ITEMS)) {
+            $sess = session('receipt');
+
+            $sess['emptyList'] = 1;
+            session(['receipt' => $sess]);
+
+            return redirect()->route('receipts.create');
+        }
+        
         $receipt = Self::storeReceipt($request);
         $items = Self::selectedItems($request->SELECTED_ITEMS);
+
 
         $index = 0;
         foreach ($items as $item) {
@@ -171,26 +184,54 @@ class ReceiptController extends Controller
             }
         }
         $sess['item'] = $newItems;
+
+        if (array_key_exists('itemInserted', $sess)) {
+            unset($sess['itemInserted']);
+        }
+        Self::alertDismissEmptyList();
+
+        $sess['itemRemoved'] = 1;
+
         session(['receipt' => $sess]);
 
         return redirect()->route('receipts.create');
+    }
+    public function alertDismiss()
+    {
+        $sess = session('receipt');
+
+        if (array_key_exists('itemInserted', $sess)) {
+            unset($sess['itemInserted']);
+        }
+        if (array_key_exists('itemRemoved', $sess)) {
+            unset($sess['itemRemoved']);
+        }
+
+        session(['receipt' => $sess]);
+    }
+    public function alertDismissEmptyList()
+    {
+        $sess = session('receipt');
+        if (array_key_exists('emptyList', $sess)) {
+            unset($sess['emptyList']);
+        }
+        session(['receipt' => $sess]);
     }
     public function customerReceipt(Request $request)
     {
 
         $customer = Customer::find($request->customer);
 
-
         $sess = session('receipt');
 
         $sess['customer_id'] = $customer->id;
         $sess['name'] = mb_strtoupper($customer->name, 'UTF-8');
 
-        if (array_key_exists('itemInserted', $sess)) {
-            unset($sess['itemInserted']);
-        }
-        $sess['phone'] = $customer->phone;
+        Self::alertDismiss();
+        Self::alertDismissEmptyList();
 
+
+        $sess['phone'] = $customer->phone;
         session(['receipt' => $sess]);
 
         return redirect()->route('receipts.create');
@@ -201,6 +242,9 @@ class ReceiptController extends Controller
         $sess = session('receipt');
 
         $sess['note'] = mb_strtoupper($request->note, 'UTF-8');
+
+        Self::alertDismiss();
+        Self::alertDismissEmptyList();
 
         if (!in_array($request->item, $sess['item'])) {
             array_push($sess['item'], $request->item);
@@ -232,8 +276,6 @@ class ReceiptController extends Controller
     }
     public function sumPrice($items, $request)
     {
-
-
         $index = 0;
 
         foreach ($items as $i) {
@@ -252,8 +294,10 @@ class ReceiptController extends Controller
     }
     public function selectedItems($SELECTED_ITEMS)
     {
+
         $items = array();
         $index = 0;
+
         foreach ($SELECTED_ITEMS as $select_item) {
             $item = Item::find($select_item);
 
@@ -262,6 +306,7 @@ class ReceiptController extends Controller
                 $index++;
             }
         }
+
         return $items;
     }
     public function validation(Request $request)

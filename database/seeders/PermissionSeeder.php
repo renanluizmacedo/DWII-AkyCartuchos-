@@ -28,7 +28,7 @@ class PermissionSeeder extends Seeder
         $perm = 0;
 
         for ($j = 1; $j <= 25; $j++) {
-            if ($j == 1 || $j == 5) {
+            if ($j >= 6 && $j < 21) {
                 $perm = 1;
             } else {
                 $perm = 0;
@@ -41,7 +41,7 @@ class PermissionSeeder extends Seeder
             ]);
         }
         for ($j = 1; $j <= 25; $j++) {
-            if ($j >= 6 || $j <= 15) {
+            if ($j >= 6) {
                 $perm = 1;
             } else {
                 $perm = 0;
@@ -53,6 +53,7 @@ class PermissionSeeder extends Seeder
                 'permissao' => $perm,
             ]);
         }
+
         for ($j = 1; $j <= 25; $j++) {
             DB::table('permissions')->insert([
 

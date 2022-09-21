@@ -4,7 +4,7 @@
    <p> Novo acesso com email: {{$user->email}}</p>
    <p> Data/Hora: {{ $data }}</p>
    <div>
-       <img width="100%" height="100%"
+       <img width="50%" height="100%"
            src="{{ $message->embed(public_path().'/img/logo_marca.png') }}">
    </div>
 </body>

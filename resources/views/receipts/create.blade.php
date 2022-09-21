@@ -3,14 +3,23 @@
 @section('conteudo')
 <div class="container-fluid">
     @if ($receiptSession != null)
-    @if (array_key_exists('itemInserted', $receiptSession))
-    @if($receiptSession['itemInserted'] == 1)
-    <x-alert-item-inserted id="hide"></x-alert-item-inserted>
-    @else
-    <x-alert-item-not-inserted id="hide"></x-alert-item-not-inserted>
-
-    @endif
-    @endif
+        @if (array_key_exists('itemInserted', $receiptSession))
+            @if($receiptSession['itemInserted'] == 1)
+                <x-alert-item-inserted id="hide"></x-alert-item-inserted>
+            @else
+                <x-alert-item-not-inserted id="hide"></x-alert-item-not-inserted>
+            @endif
+        @endif
+        @if (array_key_exists('itemRemoved', $receiptSession))
+            @if($receiptSession['itemRemoved'] == 1)
+                <x-alert-item-removed id="hide"></x-alert-item-removed>
+            @endif
+        @endif
+        @if (array_key_exists('emptyList', $receiptSession))
+            @if($receiptSession['emptyList'] == 1)
+                <x-alert-empty-items id="hide"></x-alert-empty-items>
+            @endif
+        @endif
     @endif
     <form class="user" action="{{ route('receipts.store') }}" method="POST" id="receiptStore">
         @csrf
@@ -20,7 +29,9 @@
 
             <div class="col-sm-6 mb-3 mb-sm-4">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control form-control-user @if($errors->has('name')) is-invalid @endif" id="name" name="name" readonly placeholder="Insira o nome" @if($receiptSession["name"] !='null' ) value={{$receiptSession["name"]}} @endif>
+                <input type="text" class="form-control form-control-user @if($errors->has('name')) is-invalid @endif" 
+                id="name" name="name" readonly placeholder="Insira o nome" 
+                @if($receiptSession["name"] !='null' ) value={{$receiptSession["name"]}} @endif>
                 @if($errors->has('name'))
                 <div class='invalid-feedback'>
                     {{ $errors->first('name') }}
